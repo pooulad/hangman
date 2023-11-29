@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"math/rand"
@@ -12,13 +13,22 @@ func main() {
 	log.SetFlags(0)
 	log.SetPrefix("hangman game: ")
 
-	_, err := os.Open("./wordlist.txt")
+	gameWords := []string{}
+
+	file, err := os.Open("./wordlist.txt")
 	if err != nil {
 		log.Fatal(fmt.Errorf("reading file failed. please try again or submit an issue"))
 	}
-	gameWords := []string{"golang", "javascript", "php", "rust", "python"}
+
+	fileScanner := bufio.NewScanner(file)
+	fileScanner.Split(bufio.ScanLines)
+
+	for fileScanner.Scan() {
+		gameWords = append(gameWords, fileScanner.Text())
+	}
+
 	randomWord := gameWords[rand.Intn(len(gameWords))]
-	lives := 5
+	lives := 10
 
 	blanks := []string{}
 	for range randomWord {
