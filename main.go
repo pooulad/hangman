@@ -18,9 +18,9 @@ func main() {
 		log.Fatal(fmt.Errorf("reading file failed. please try again or submit an issue"))
 	}
 
-	fmt.Fprint(os.Stdout,string(banner) + "\n")
+	fmt.Fprint(os.Stdout, string(banner)+"\n")
 
-	gameWords := []string{}
+	gameWords := []string{"golang"}
 
 	wordlist, err := os.Open("./wordlist.txt")
 	if err != nil {
@@ -43,6 +43,8 @@ func main() {
 	for range randomWord {
 		blanks = append(blanks, "_")
 	}
+
+	correctAnswers := 0
 
 loop:
 	for {
@@ -77,12 +79,18 @@ loop:
 			}
 
 			if randomWord == strings.Join(blanks, "") {
-				fmt.Printf("❤️ %d, Word: %s - you won.\n", lives, randomWord)
+				correctAnswers += 1
+				fmt.Printf("❤️ %d,✅correct answers %d, Word: %s - you won.\n", lives,correctAnswers, randomWord)
 				randomWord = gameWords[rand.Intn(len(gameWords))]
 
 				blanks = []string{}
 				for range randomWord {
 					blanks = append(blanks, "_")
+				}
+
+				if correctAnswers >= 3 {
+					fmt.Println("🤩Congratulations, you have completed the game🤩")
+					os.Exit(0)
 				}
 
 				goto loop
