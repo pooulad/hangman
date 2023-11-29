@@ -16,6 +16,7 @@ func main() {
 		blanks = append(blanks, "_")
 	}
 
+loop:
 	for {
 		fmt.Printf("❤️ %d, Word letters : %s\n", lives, strings.Join(blanks, " "))
 
@@ -49,7 +50,14 @@ func main() {
 
 			if randomWord == strings.Join(blanks, "") {
 				fmt.Printf("❤️ %d, Word: %s - you won.\n", lives, randomWord)
-				break
+				randomWord = gameWords[rand.Intn(len(gameWords))]
+
+				blanks = []string{}
+				for range randomWord {
+					blanks = append(blanks, "_")
+				}
+
+				goto loop
 			}
 		}
 	}
