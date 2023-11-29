@@ -28,7 +28,7 @@ func main() {
 	}
 
 	randomWord := gameWords[rand.Intn(len(gameWords))]
-	lives := 10
+	lives := 5
 
 	blanks := []string{}
 	for range randomWord {
