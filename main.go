@@ -21,6 +21,7 @@ func main() {
 
 		var input string
 		fmt.Scanln(&input)
+		input = strings.ToLower(input)
 
 		if len(input) > len(randomWord) {
 			fmt.Println("your input length is bigger than word length")
@@ -35,7 +36,7 @@ func main() {
 						correctAnswer = true
 					}
 				}
-				
+
 				if !correctAnswer {
 					lives--
 				}
@@ -43,10 +44,12 @@ func main() {
 
 			if lives <= 0 {
 				fmt.Printf("💔 0, Word: %s - sorry you lost.\n", randomWord)
+				break
 			}
 
 			if randomWord == strings.Join(blanks, "") {
 				fmt.Printf("❤️ %d, Word: %s - you won.\n", lives, randomWord)
+				break
 			}
 		}
 	}
