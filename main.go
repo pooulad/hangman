@@ -28,12 +28,14 @@ func main() {
 		} else {
 			for _, inputLetter := range input {
 				correctAnswer := false
+
 				for i, wordLetter := range randomWord {
 					if inputLetter == wordLetter {
 						blanks[i] = string(inputLetter)
 						correctAnswer = true
 					}
 				}
+				
 				if !correctAnswer {
 					lives--
 				}
