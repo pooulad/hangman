@@ -13,19 +13,28 @@ func main() {
 	log.SetFlags(0)
 	log.SetPrefix("hangman game: ")
 
-	gameWords := []string{}
-
-	file, err := os.Open("./wordlist.txt")
+	banner, err := os.ReadFile("./program/banner.txt")
 	if err != nil {
 		log.Fatal(fmt.Errorf("reading file failed. please try again or submit an issue"))
 	}
 
-	fileScanner := bufio.NewScanner(file)
+	fmt.Fprint(os.Stdout,string(banner) + "\n")
+
+	gameWords := []string{}
+
+	wordlist, err := os.Open("./wordlist.txt")
+	if err != nil {
+		log.Fatal(fmt.Errorf("reading file failed. please try again or submit an issue"))
+	}
+
+	fileScanner := bufio.NewScanner(wordlist)
 	fileScanner.Split(bufio.ScanLines)
 
 	for fileScanner.Scan() {
 		gameWords = append(gameWords, fileScanner.Text())
 	}
+
+	wordlist.Close()
 
 	randomWord := gameWords[rand.Intn(len(gameWords))]
 	lives := 5
@@ -63,7 +72,7 @@ loop:
 			}
 
 			if lives <= 0 {
-				fmt.Printf("💔 0, Word: %s - sorry you lost.\n", randomWord)
+				fmt.Printf("💔 0, Word was: %s - sorry your character is dead ☠️.\n", randomWord)
 				break
 			}
 
