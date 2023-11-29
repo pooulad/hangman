@@ -2,11 +2,20 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"math/rand"
+	"os"
 	"strings"
 )
 
 func main() {
+	log.SetFlags(0)
+	log.SetPrefix("hangman game: ")
+	
+	_, err := os.Open("./worddlist.txt")
+	if err != nil {
+		log.Fatal(fmt.Errorf("reading file failed. please try again or submit an issue"))
+	}
 	gameWords := []string{"golang", "javascript", "php", "rust", "python"}
 	randomWord := gameWords[rand.Intn(len(gameWords))]
 	lives := 5
