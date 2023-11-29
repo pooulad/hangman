@@ -11,8 +11,8 @@ import (
 func main() {
 	log.SetFlags(0)
 	log.SetPrefix("hangman game: ")
-	
-	_, err := os.Open("./worddlist.txt")
+
+	_, err := os.Open("./wordlist.txt")
 	if err != nil {
 		log.Fatal(fmt.Errorf("reading file failed. please try again or submit an issue"))
 	}
